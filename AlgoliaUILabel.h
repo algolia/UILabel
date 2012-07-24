@@ -1,6 +1,4 @@
-// Copyright (C) 2012 Julien Lemoine. All rights reserved.
-// Contact: contact (at) algolia.com
-//
+
 // Copyright (C) 2012 Julien Lemoine. All rights reserved.
 // Contact: contact (at) algolia.com
 //
