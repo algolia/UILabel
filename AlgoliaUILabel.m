@@ -30,7 +30,7 @@
 
 -(void) drawNormalString:(NSString*)str rect:(CGRect)rect
 {
-    [[UIColor blackColor] setFill];
+    [self.textColor setFill];
     CGSize s = [str drawInRect:CGRectMake(rect.origin.x + offset, rect.origin.y, rect.size.width, rect.size.height) withFont:[UIFont boldSystemFontOfSize:20.0f]];
     offset += s.width;   
 }
