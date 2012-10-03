@@ -22,7 +22,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        htmlString = nil;
         self.highlightedTextColor = [UIColor colorWithRed:0.21f green:0.69f blue:1.0f alpha:1.0f];
     }
     return self;
@@ -31,37 +30,39 @@
 -(void) drawNormalString:(NSString*)str rect:(CGRect)rect
 {
     [self.textColor setFill];
-    CGSize s = [str drawInRect:CGRectMake(rect.origin.x + offset, rect.origin.y, rect.size.width, rect.size.height) withFont:[UIFont boldSystemFontOfSize:20.0f]];
+    CGSize s = [str drawInRect:CGRectMake(rect.origin.x + offset, rect.origin.y, rect.size.width, rect.size.height) withFont:self.font];
     offset += s.width;   
 }
+
 -(void) drawHighlightedString:(NSString*)str rect:(CGRect)rect
 {
     [self.highlightedTextColor setFill];
-    CGSize s = [str drawInRect:CGRectMake(rect.origin.x + offset, rect.origin.y, rect.size.width, rect.size.height) withFont:[UIFont boldSystemFontOfSize:20.0f]];
+    CGSize s = [str drawInRect:CGRectMake(rect.origin.x + offset, rect.origin.y, rect.size.width, rect.size.height) withFont:(self.highlightedTextFont != nil ? self.highlightedTextFont : self.font)];
     offset += s.width;
 }
+
 -(void) drawRect:(CGRect)rect
 {
     offset = 0;
-    if (htmlString != nil) {
+    if (self.text != nil) {
         NSUInteger prevPos = 0;
-        NSUInteger count = [htmlString length];
+        NSUInteger count = [self.text length];
         for (NSUInteger i = 0; i + 2 < count; ++i) {
-            if ([htmlString characterAtIndex:i] == '<' &&
-                ([htmlString characterAtIndex:(i + 1)] == 'b' || [htmlString characterAtIndex:(i + 1)]== 'B') &&
-                [htmlString characterAtIndex:(i + 2)] == '>') {
+            if ([self.text characterAtIndex:i] == '<' &&
+                ([self.text characterAtIndex:(i + 1)] == 'b' || [self.text characterAtIndex:(i + 1)]== 'B') &&
+                [self.text characterAtIndex:(i + 2)] == '>') {
                 if (i > prevPos)
-                    [self drawNormalString:[htmlString substringWithRange:NSMakeRange(prevPos, i - prevPos)] rect:rect];
+                    [self drawNormalString:[self.text substringWithRange:NSMakeRange(prevPos, i - prevPos)] rect:rect];
                 i += 3;
                 prevPos = i;
                 // search for end of string
                 BOOL found = NO;
                 for (NSUInteger j = i; !found && j + 4 <= count; ++j) {
-                    if ([htmlString characterAtIndex:j] == '<' &&
-                       [htmlString characterAtIndex:(j + 1)] == '/' &&
-                       ([htmlString characterAtIndex:(j + 2)] == 'b' || [htmlString characterAtIndex:(j + 2)]== 'B') &&
-                       [htmlString characterAtIndex:(j + 3)] == '>') {
-                        [self drawHighlightedString:[htmlString substringWithRange:NSMakeRange(prevPos, j - prevPos)] rect:rect];
+                    if ([self.text characterAtIndex:j] == '<' &&
+                       [self.text characterAtIndex:(j + 1)] == '/' &&
+                       ([self.text characterAtIndex:(j + 2)] == 'b' || [self.text characterAtIndex:(j + 2)]== 'B') &&
+                       [self.text characterAtIndex:(j + 3)] == '>') {
+                        [self drawHighlightedString:[self.text substringWithRange:NSMakeRange(prevPos, j - prevPos)] rect:rect];
                         i = j + 3;
                         prevPos = j + 4;
                         found = YES;
@@ -70,12 +71,12 @@
             }
         }
         if (prevPos < count) {
-            [self drawNormalString:[htmlString substringWithRange:NSMakeRange(prevPos, count - prevPos)] rect:rect];
+            [self drawNormalString:[self.text substringWithRange:NSMakeRange(prevPos, count - prevPos)] rect:rect];
         }
     } else {
         [super drawRect:rect];
     }
 }
 
-@synthesize htmlString;
+@synthesize highlightedTextFont;
 @end

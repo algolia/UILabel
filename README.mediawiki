@@ -1,0 +1,35 @@
+== Overview ==
+This class is a simple Label that interprets Bold HTML tags (&lt;b&gt; and &lt;/b&gt;) in the text attribute of the Label.
+
+Sections between &lt;b&gt;..&lt;/b&gt; are displayed with ('''highlightedTextColor''' color and '''highlightedTextFont''' font attributes).
+
+Other sections are displayed with '''textColor''' and '''font''' attributes.
+
+This implementation is faster than UIWebView and is perfect to put in a '''UITableViewCell'''.
+
+== Example ==
+
+<pre>
+- (UITableViewCell *)tableView:(UITableView *)tableView 
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath 
+{
+    static NSString *CellIdentifier = @"CellIdentifier";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc]
+                initWithStyle:UITableViewCellStyleDefault
+                reuseIdentifier:CellIdentifier];
+        AlgoliaUILabel *lblMainLabel = [[AlgoliaUILabel alloc] initWithFrame:CGRectMake(5, 5, 300, 45)];
+        lblMainLabel.tag = 42;
+        lblMainLabel.font = [UIFont fontWithName:@"Helvetica" size:20];
+        lblMainLabel.highlightedTextFont = [UIFont fontWithName:@"Helvetica-Bold" size:20];
+        lblMainLabel.backgroundColor = [UIColor clearColor];
+        lblMainLabel.textColor = [UIColor blackColor];
+        lblMainLabel.highlightedTextColor = [UIColor blackColor];
+        [cell.contentView addSubview:lblMainLabel];
+    }
+    UILabel* label = (ASUILabel*)[cell viewWithTag:42];
+    label.text = @"Contains <b>highlighted</b> word";
+    return cell;
+}
+</pre>

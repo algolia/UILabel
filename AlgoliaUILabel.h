@@ -17,10 +17,23 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ * This class is a simple Label that interprets Bold HTML tags (<b> and </b>)
+ *  in the text attribute of the Label.
+ *
+ * Sections between <b>..</b> are displayed with ('highlightedTextColor' color
+ * and 'highlightedTextFont' font attributes).
+ *
+ * Other sections are displayed with 'textColor' and 'font' attributes.
+ *
+ * This implementation is faster than UIWebView and is perfect to put in a
+ * UITableViewCell.
+ */
 @interface AlgoliaUILabel : UILabel
 {
-    NSString* htmlString;
+    UIFont* highlightedTextFont;
     NSUInteger offset;
 }
-@property (strong, nonatomic) NSString* htmlString;
+@property (strong, nonatomic) UIFont* highlightedTextFont;
+
 @end
