@@ -5,7 +5,7 @@ Sections between &lt;b&gt;..&lt;/b&gt; are displayed with ('''highlightedTextCol
 
 Other sections are displayed with '''textColor''' and '''font''' attributes.
 
-This implementation is faster than UIWebView and is perfect to put in a '''UITableViewCell'''.
+This implementation is faster than UIWebView and is perfect for '''UITableViewCell'''.
 
 == Example ==
 
