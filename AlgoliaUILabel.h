@@ -26,7 +26,7 @@
  *
  * Other sections are displayed with 'textColor' and 'font' attributes.
  *
- * This implementation is faster than UIWebView and is perfect to put in a
+ * This implementation is faster than UIWebView and is perfect for
  * UITableViewCell.
  */
 @interface AlgoliaUILabel : UILabel
