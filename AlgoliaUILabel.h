@@ -22,11 +22,11 @@
  * The label use 3 differents fonts (textFont, highlightedTextFont and emphasisTextFont) and 
  * 2 differents colors (textColor and highlightedTextColor).
  * 
- * Here is the behaviors :
- * - Parts of text without tags are rendered with textColor and textFont
- * - Parts of text between <b></b> tags are rendered with highligtedTextColor and highligtedTextFont
- * - Parts of text between <em></em> tags are rendered with textColor and emphasisTextFont
- * - Parts of text between <b> and <em> (or <em><b>) are rendered with highligtedTextColor and emphasisTextFont
+ * Here is the behavior:
+ * - Parts of text without tags are rendered with textColor and textFont;
+ * - Parts of text between <b></b> tags are rendered with highligtedTextColor and highligtedTextFont;
+ * - Parts of text between <em></em> tags are rendered with textColor and emphasisTextFont;
+ * - Parts of text between <b><em></em></b> tags are rendered with highligtedTextColor and emphasisTextFont.
  */
 @interface AlgoliaUILabel : UILabel
 {
