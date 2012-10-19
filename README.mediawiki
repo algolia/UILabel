@@ -1,11 +1,14 @@
 == Overview ==
-This class is a simple Label that interprets Bold HTML tags (&lt;b&gt; and &lt;/b&gt;) in the text attribute of the Label.
+This class is a simple Label that interprets Bold and Emphasis HTML tags (&lt;b&gt; and &lt;em&gt;) in the text attribute of the Label.
 
-Sections between &lt;b&gt;..&lt;/b&gt; are displayed with ('''highlightedTextColor''' color and '''highlightedTextFont''' font attributes).
+<ul>
+<li>Parts of text without tags are rendered with '''textColor''' and '''textFont''';</li>
+<li>Parts of text between &lt;b&gt;&lt;/b&gt; are rendered with '''highlightedTextColor''' and '''highlightedTextFont''';</li>
+<li>Parts of text between &lt;em&gt;&lt;/em&gt; are rendered with '''textColor''' and '''emphasisTextFont''';</li>
+<li>Parts of text between &lt;b&gt;&lt;em&gt;&lt;/em&gt;&lt;/b&gt; are rendered with '''highlightedTextColor''' and '''emphasisTextFont''';</li>
+</ul>
 
-Other sections are displayed with '''textColor''' and '''font''' attributes.
-
-This implementation is faster than UIWebView and is perfect for '''UITableViewCell'''.
+This implementation is faster than UIWebView and is perfect for '''UITableViewCell''' and easily customizable for your needs.
 
 == Example ==
 
@@ -29,7 +32,7 @@ This implementation is faster than UIWebView and is perfect for '''UITableViewCe
         [cell.contentView addSubview:lblMainLabel];
     }
     UILabel* label = (ASUILabel*)[cell viewWithTag:42];
-    label.text = @"Contains <b>highlighted</b> word";
+    label.text = @"<em>Note:</em> This is a <b>highlighted</b> word";
     return cell;
 }
 </pre>
