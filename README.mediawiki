@@ -8,7 +8,7 @@ This class is a simple Label that interprets Bold and Emphasis HTML tags (&lt;b&
 <li>Parts of text between &lt;b&gt;&lt;em&gt;&lt;/em&gt;&lt;/b&gt; are rendered with '''highlightedTextColor''' and '''emphasisTextFont''';</li>
 </ul>
 
-This implementation is faster than UIWebView and is perfect for '''UITableViewCell''' and easily customizable for your needs.
+This implementation is faster than UIWebView and is perfect for '''UITableViewCell''', it is very easy to customize it for your needs.
 
 == Example ==
 
