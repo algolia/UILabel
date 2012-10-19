@@ -31,7 +31,7 @@ This implementation is faster than UIWebView and is perfect for '''UITableViewCe
         lblMainLabel.highlightedTextColor = [UIColor blackColor];
         [cell.contentView addSubview:lblMainLabel];
     }
-    UILabel* label = (ASUILabel*)[cell viewWithTag:42];
+    UILabel* label = (UILabel*)[cell viewWithTag:42];
     label.text = @"<em>Note:</em> This is a <b>highlighted</b> word";
     return cell;
 }
