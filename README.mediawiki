@@ -1,5 +1,5 @@
 == Overview ==
-This class is a simple Label that interprets Bold and Emphasis HTML tags (&lt;b&gt; and &lt;em&gt;) in the text attribute of the Label.
+This class is an iOS (iPhone and iPad) replacement of UILabel class that interprets Bold and Emphasis HTML tags (&lt;b&gt; and &lt;em&gt;) in the text attribute of the Label.
 
 <ul>
 <li>Parts of text without tags are rendered with '''textColor''' and '''textFont''';</li>
