@@ -22,7 +22,7 @@ This implementation is faster than UIWebView and is perfect for '''UITableViewCe
         cell = [[UITableViewCell alloc]
                 initWithStyle:UITableViewCellStyleDefault
                 reuseIdentifier:CellIdentifier];
-        AlgoliaUILabel *lblMainLabel = [[AlgoliaUILabel alloc] initWithFrame:CGRectMake(5, 5, 300, 45)];
+        ASUILabel *lblMainLabel = [[ASUILabel alloc] initWithFrame:CGRectMake(5, 5, 300, 45)];
         lblMainLabel.tag = 42;
         lblMainLabel.font = [UIFont fontWithName:@"Helvetica" size:20];
         lblMainLabel.highlightedTextFont = [UIFont fontWithName:@"Helvetica-Bold" size:20];

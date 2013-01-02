@@ -28,7 +28,7 @@
  * - Parts of text between <em></em> tags are rendered with textColor and emphasisTextFont;
  * - Parts of text between <b><em></em></b> tags are rendered with highligtedTextColor and emphasisTextFont.
  */
-@interface AlgoliaUILabel : UILabel
+@interface ASUILabel : UILabel
 {
     UIFont* highlightedTextFont;
     UIFont* emphasisTextFont;

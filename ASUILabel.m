@@ -16,7 +16,7 @@
 
 #import "AlgoliaUILabel.h"
 
-@implementation AlgoliaUILabel
+@implementation ASUILabel
 
 - (id)initWithFrame:(CGRect)frame
 {
