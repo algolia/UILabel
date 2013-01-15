@@ -27,6 +27,8 @@
  * - Parts of text between <b></b> tags are rendered with highligtedTextColor and highligtedTextFont;
  * - Parts of text between <em></em> tags are rendered with textColor and emphasisTextFont;
  * - Parts of text between <b><em></em></b> tags are rendered with highligtedTextColor and emphasisTextFont.
+ *
+ * Limit: This class only handles one line, you cannot use it with multiple lines.
  */
 @interface ASUILabel : UILabel
 {

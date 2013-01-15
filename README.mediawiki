@@ -8,7 +8,8 @@ This class is an iOS (iPhone and iPad) replacement of UILabel class that interpr
 <li>Parts of text between &lt;b&gt;&lt;em&gt;&lt;/em&gt;&lt;/b&gt; are rendered with '''highlightedTextColor''' and '''emphasisTextFont''';</li>
 </ul>
 
-This implementation is faster than UIWebView and is perfect for '''UITableViewCell''', it is very easy to customize it for your needs.
+This implementation is faster than UIWebView and is perfect for '''UITableViewCell''', it is very easy to customize it for your needs.<br/>
+'''Limit''': This class only handles one line, you cannot use it with multiple lines.
 
 == Example ==
 

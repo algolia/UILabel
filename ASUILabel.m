@@ -40,7 +40,7 @@
       font = (self.emphasisTextFont != nil ? self.emphasisTextFont : self.font);
     else if (bold)
       font = (self.highlightedTextFont != nil ? self.highlightedTextFont : self.font);
-    CGSize s = [toDisplay drawInRect:CGRectMake(rect.origin.x + offset, rect.origin.y, rect.size.width, rect.size.height) withFont:font];
+    CGSize s = [toDisplay drawInRect:CGRectMake(rect.origin.x + offset, rect.origin.y, rect.size.width - offset, rect.size.height) withFont:font  lineBreakMode:self.lineBreakMode];
     offset += s.width;
   }
 }
