@@ -14,7 +14,7 @@
 //limitations under the License.
 //
 
-#import "AlgoliaUILabel.h"
+#import "ASUILabel.h"
 
 @implementation ASUILabel
 
