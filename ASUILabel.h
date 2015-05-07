@@ -19,9 +19,9 @@
 /**
  * This class interprets the <b></b> and <em></em> tags in the text attribute of Label.
  *
- * The label use 3 differents fonts (textFont, highlightedTextFont and emphasisTextFont) and 
+ * The label use 3 differents fonts (textFont, highlightedTextFont and emphasisTextFont) and
  * 2 differents colors (textColor and highlightedTextColor).
- * 
+ *
  * Here is the behavior:
  * - Parts of text without tags are rendered with textColor and textFont;
  * - Parts of text between <b></b> tags are rendered with highligtedTextColor and highligtedTextFont;
@@ -38,5 +38,7 @@
 }
 @property (strong, nonatomic) UIFont* highlightedTextFont;
 @property (strong, nonatomic) UIFont* emphasisTextFont;
+
+- (NSString *)plainText;
 
 @end
