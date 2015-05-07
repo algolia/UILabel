@@ -29,80 +29,92 @@
 
 -(void) drawString:(NSString*)str idx:(NSUInteger)idx length:(NSUInteger)length rect:(CGRect)rect bold:(BOOL)bold emphasis:(BOOL)emphasis
 {
-  if (length > 0) {
-    NSString* toDisplay = [str substringWithRange:NSMakeRange(idx, length)];
-    if (bold && self.highlightedTextColor != nil)
-      [self.highlightedTextColor setFill];
-    else
-      [self.textColor setFill];
-    UIFont* font = self.font;
-    if (emphasis)
-      font = (self.emphasisTextFont != nil ? self.emphasisTextFont : self.font);
-    else if (bold)
-      font = (self.highlightedTextFont != nil ? self.highlightedTextFont : self.font);
-    CGSize s = [toDisplay drawInRect:CGRectMake(rect.origin.x + offset, rect.origin.y, rect.size.width - offset, rect.size.height) withFont:font  lineBreakMode:self.lineBreakMode];
-    offset += s.width;
-  }
+    if (length > 0) {
+        NSString* toDisplay = [str substringWithRange:NSMakeRange(idx, length)];
+        if (bold && self.highlightedTextColor != nil)
+            [self.highlightedTextColor setFill];
+        else
+            [self.textColor setFill];
+        UIFont* font = self.font;
+        if (emphasis)
+            font = (self.emphasisTextFont != nil ? self.emphasisTextFont : self.font);
+        else if (bold)
+            font = (self.highlightedTextFont != nil ? self.highlightedTextFont : self.font);
+        CGSize s = [toDisplay drawInRect:CGRectMake(rect.origin.x + offset, rect.origin.y, rect.size.width - offset, rect.size.height) withFont:font  lineBreakMode:self.lineBreakMode];
+        offset += s.width;
+    }
 }
 
 BOOL containsString(NSString* src, NSUInteger idx, const char* toSearch)
 {
-  NSUInteger count = [src length];
-  for (NSUInteger i = 0; toSearch[i] != 0; ++i) {
-    NSUInteger srcIdx = idx + i;
-    if (srcIdx >= count)
-      return NO;
-    unichar c = [src characterAtIndex:srcIdx];
-    if (c != toSearch[i] && c != toupper(toSearch[i]))
-      return NO;
-  }
-  return YES;
+    NSUInteger count = [src length];
+    for (NSUInteger i = 0; toSearch[i] != 0; ++i) {
+        NSUInteger srcIdx = idx + i;
+        if (srcIdx >= count)
+            return NO;
+        unichar c = [src characterAtIndex:srcIdx];
+        if (c != toSearch[i] && c != toupper(toSearch[i]))
+            return NO;
+    }
+    return YES;
 }
 
 -(void) drawRect:(CGRect)rect
 {
-  BOOL isBold = NO;
-  BOOL isEmphasis = NO;
+    BOOL isBold = NO;
+    BOOL isEmphasis = NO;
+
+    offset = 0;
+    if (self.text != nil) {
+        NSUInteger prevPos = 0;
+        NSUInteger count = [self.text length];
+        for (NSUInteger i = 0; i < count; ) {
+            if ([self.text characterAtIndex:i] == '<') {
+                if (containsString(self.text, i, "<b>")) {
+                    [self drawString:self.text idx:prevPos length:(i - prevPos) rect:rect bold:isBold emphasis:isEmphasis];
+                    i += 3;
+                    prevPos = i;
+                    isBold = YES;
+                } else if (containsString(self.text, i, "</b>")) {
+                    [self drawString:self.text idx:prevPos length:(i - prevPos) rect:rect bold:isBold emphasis:isEmphasis];
+                    i += 4;
+                    prevPos = i;
+                    isBold = NO;
+                } else if (containsString(self.text, i, "<em>")) {
+                    [self drawString:self.text idx:prevPos length:(i - prevPos) rect:rect bold:isBold emphasis:isEmphasis];
+                    i += 4;
+                    prevPos = i;
+                    isEmphasis = YES;
+                } else if (containsString(self.text, i, "</em>")) {
+                    [self drawString:self.text idx:prevPos length:(i - prevPos) rect:rect bold:isBold emphasis:isEmphasis];
+                    i += 5;
+                    prevPos = i;
+                    isEmphasis = NO;
+                } else {
+                    ++i;
+                }
+            } else {
+                ++i;
+            }
+        }
+        if (prevPos < count) {
+            [self drawString:self.text idx:prevPos length:(count - prevPos) rect:rect bold:isBold emphasis:isEmphasis];
+        }
+    } else {
+        [super drawRect:rect];
+    }
+}
+
+- (NSString *)plainText
+{
+    NSString *plainText = self.text;
     
-  offset = 0;
-  if (self.text != nil) {
-    NSUInteger prevPos = 0;
-    NSUInteger count = [self.text length];
-    for (NSUInteger i = 0; i < count; ) {
-      if ([self.text characterAtIndex:i] == '<') {
-	if (containsString(self.text, i, "<b>")) {
-	  [self drawString:self.text idx:prevPos length:(i - prevPos) rect:rect bold:isBold emphasis:isEmphasis];
-	  i += 3;
-	  prevPos = i;
-	  isBold = YES;
-	} else if (containsString(self.text, i, "</b>")) {
-	  [self drawString:self.text idx:prevPos length:(i - prevPos) rect:rect bold:isBold emphasis:isEmphasis];
-	  i += 4;
-	  prevPos = i;
-	  isBold = NO;
-	} else if (containsString(self.text, i, "<em>")) {
-	  [self drawString:self.text idx:prevPos length:(i - prevPos) rect:rect bold:isBold emphasis:isEmphasis];
-	  i += 4;
-	  prevPos = i;
-	  isEmphasis = YES;
-	} else if (containsString(self.text, i, "</em>")) {
-	  [self drawString:self.text idx:prevPos length:(i - prevPos) rect:rect bold:isBold emphasis:isEmphasis];
-	  i += 5;
-	  prevPos = i;
-	  isEmphasis = NO;
-	} else {
-	  ++i;
-	}
-      } else {
-	++i;
-      }
-    }
-    if (prevPos < count) {
-      [self drawString:self.text idx:prevPos length:(count - prevPos) rect:rect bold:isBold emphasis:isEmphasis];
-    }
-  } else {
-    [super drawRect:rect];
-  }
+    plainText = [plainText stringByReplacingOccurrencesOfString:@"<b>" withString:@""];
+    plainText = [plainText stringByReplacingOccurrencesOfString:@"</b>" withString:@""];
+    plainText = [plainText stringByReplacingOccurrencesOfString:@"<em>" withString:@""];
+    plainText = [plainText stringByReplacingOccurrencesOfString:@"</em>" withString:@""];
+    
+    return plainText;
 }
 
 @synthesize highlightedTextFont;
