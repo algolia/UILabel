@@ -13,6 +13,12 @@ This implementation is faster than UIWebView or NSScanner, and is perfect for **
 
 Simply drag and drop the file in your project.
 
+Since the extension is implemented in Swift, if you are using **Objective-C**, you need to go to your target **Build Settings** and change `Define Module` to `Yes`. You can also choose a **Product Module Name**. Finally, import the module in your `.m` file:
+
+```objc
+#import "YourProductModuleName-Swift.h"
+```
+
 ## Example
 
 ```swift
