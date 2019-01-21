@@ -29,13 +29,13 @@ extension UILabel {
             return attributedText?.string ?? ""
         }
         set {
-            attributedTextFromHtml(htmlText: newValue)
+            attributedTextFromHtml(newValue)
         }
     }
     
-    private func attributedTextFromHtml(htmlText: String) {
+    private func attributedTextFromHtml(_ htmlText: String) {
         let text = NSMutableString(string: htmlText)
-        let rangesOfAttributes = getRangeToHighlight(text: text)
+        let rangesOfAttributes = getRangeToHighlight(text)
         
         let attributedString = NSMutableAttributedString(string: String(text))
         for range in rangesOfAttributes {
@@ -46,7 +46,7 @@ extension UILabel {
         attributedText = attributedString
     }
     
-    private func getRangeToHighlight(text: NSMutableString) -> [NSRange] {
+    private func getRangeToHighlight(_ text: NSMutableString) -> [NSRange] {
         var rangesOfAttributes = [NSRange]()
         
         while true {
