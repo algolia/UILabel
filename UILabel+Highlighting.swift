@@ -26,40 +26,40 @@ import UIKit
 extension UILabel {
     var highlightedText: String {
         get {
-            return attributedText.string
+            return attributedText?.string ?? ""
         }
         set {
             attributedTextFromHtml(newValue)
         }
     }
     
-    private func attributedTextFromHtml(htmlText: String) {
-        var text = NSMutableString(string: htmlText)
-        var rangesOfAttributes = getRangeToHighlight(text)
+    private func attributedTextFromHtml(_ htmlText: String) {
+        let text = NSMutableString(string: htmlText)
+        let rangesOfAttributes = getRangeToHighlight(text)
         
         let attributedString = NSMutableAttributedString(string: String(text))
         for range in rangesOfAttributes {
-            let color = highlightedTextColor ?? UIColor.yellowColor()
-            attributedString.addAttribute(NSBackgroundColorAttributeName, value: color, range: range)
+            let color = highlightedTextColor ?? UIColor.yellow
+            attributedString.addAttribute(NSAttributedString.Key.backgroundColor, value: color, range: range)
         }
         
         attributedText = attributedString
     }
     
-    private func getRangeToHighlight(text: NSMutableString) -> [NSRange] {
+    private func getRangeToHighlight(_ text: NSMutableString) -> [NSRange] {
         var rangesOfAttributes = [NSRange]()
         
         while true {
-            let matchBegin = text.rangeOfString("<em>", options: .CaseInsensitiveSearch)
+            let matchBegin = text.range(of: "<em>", options: .caseInsensitive)
             
             if matchBegin.location != NSNotFound {
-                text.deleteCharactersInRange(matchBegin)
+                text.deleteCharacters(in: matchBegin)
                 let firstCharacter = matchBegin.location
                 
                 let range = NSRange(location: firstCharacter, length: text.length - firstCharacter)
-                let matchEnd = text.rangeOfString("</em>", options: .CaseInsensitiveSearch, range: range)
+                let matchEnd = text.range(of: "</em>", options: .caseInsensitive, range: range)
                 if matchEnd.location != NSNotFound {
-                    text.deleteCharactersInRange(matchEnd)
+                    text.deleteCharacters(in: matchEnd)
                     let lastCharacter = matchEnd.location
                     
                     rangesOfAttributes.append(NSRange(location: firstCharacter, length: lastCharacter - firstCharacter))
